@@ -45,7 +45,8 @@ let save = (repos, callback) => {
   if (errors.length > 0) {
     callback(errors)
   } else {
-    callback(null, 'Done!')
+    console.log('repos', repos)
+    callback(null, 'Repos saved to database!', repos)
   }
 }
 

@@ -27,7 +27,6 @@ var getReposByUsername = (userName, cb) => {
   }
 
   request(options, callback);
-  //console.log('info', info)
 }
 
 module.exports.getReposByUsername = getReposByUsername;

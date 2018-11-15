@@ -8,20 +8,38 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      repos: []
+      repos: [],
+      links: []
     }
-
   }
 
   search (term) {
     console.log(`${term} was searched`);
-    $.post("/repos", {userName: term}, (data) => console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', data))
+    $.post("/repos", {userName: term});
+  }
+
+  componentDidMount() {
+    this.list();
+  }
+
+  // ComponentWillUnmount() {
+
+  // }
+
+  list () {
+    $.get("/repos", (data) => {
+      this.setState({
+        repos: data,
+        links: data.map((repo) => <li><a href={repo.url}>{repo.repoName}</a></li>)
+      })
+      console.log(this.state.links)
+    })
   }
 
   render () {
     return (<div>
       <h1>Github Fetcher</h1>
-      <RepoList repos={this.state.repos}/>
+      <RepoList repos={this.state.repos} links={this.state.links}/>
       <Search onSearch={this.search.bind(this)}/>
     </div>)
   }

@@ -40,7 +40,6 @@ app.get('/repos', function (req, res) {
     if (err) {
       res.status(404).send('Error!')
     } else {
-      console.log('sorted', repos.sort(compareForks))
       var sorted = repos.sort(compareForks)
       var mostForked = sorted.slice(0, 25)
       res.send(mostForked)
