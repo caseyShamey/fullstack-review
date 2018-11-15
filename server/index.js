@@ -12,7 +12,6 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 //app.use(getReposByUsername());
 
-
 app.post('/repos', function (req, res) {
   github.getReposByUsername(req.body.userName, (err, data) => {
     if (err) {
@@ -27,9 +26,7 @@ app.post('/repos', function (req, res) {
       })
     }
   })
-  //console.log('repos', arr)
-  //res.status(status).send('success!', body)
-  // console.log(req);
+
   // TODO - your code here!
   // This route should take the github username provided
   // and get the repo information from the github API, then
@@ -39,7 +36,22 @@ app.post('/repos', function (req, res) {
 app.get('/repos', function (req, res) {
   // TODO - your code here!
   // This route should send back the top 25 repos
+  database.Repo.find({forks: {$gt: 0}}, (err, repos) => {
+    if (err) {
+      res.status(404).send('Error!')
+    } else {
+      console.log('sorted', repos.sort(compareForks))
+      var sorted = repos.sort(compareForks)
+      var mostForked = sorted.slice(0, 25)
+      res.send(mostForked)
+    }
+  })
 });
+
+var compareForks = (a, b) => {
+  return b.forks - a.forks;
+}
+
 
 let port = 1128;
 
