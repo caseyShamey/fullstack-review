@@ -3,6 +3,11 @@ const github = require('../helpers/github.js');
 const bodyParser = require('body-parser');
 const database = require('../database/index.js');
 let app = express();
+const path = require('path');
+
+// app.get('/', function(req, res) {
+//   res.sendFile(path.join)
+// })
 
 
 app.use(express.static(__dirname + '/../client/dist'));
@@ -52,9 +57,12 @@ var compareForks = (a, b) => {
 }
 
 
-let port = 1128;
+// let port = 1128;
 
-app.listen(port, function() {
-  console.log(`listening on port ${port}`);
-});
+// app.listen(port, function() {
+//   console.log(`listening on port ${port}`);
+// });
 
+app.listenerCount(process.env.PORT || 1128, function(){
+  console.log('You server is running');
+})
